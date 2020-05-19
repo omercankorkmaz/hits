@@ -14,7 +14,8 @@ import {
   listenOrientationChange as loc,
   removeOrientationListener as rol
 } from 'react-native-responsive-screen';
-import { setPatientInfo,
+import { 
+  setPatientInfo,
   setMessages,
   textChanged,
   getMessages2,
@@ -107,35 +108,14 @@ class ChatScene extends Component {
   }
 
   setChatroomName(title, id) {
-    let roomName = title;
-    console.log('----->roomName, id', roomName, id);
-    roomName = roomName.replace(/Ğ/g, 'g')
-    .replace(/Ü/g, 'u')
-    .replace(/Ş/g, 's')
-    .replace(/I/g, 'i')
-    .replace(/İ/g, 'i')
-    .replace(/Ö/g, 'o')
-    .replace(/Ç/g, 'c')
-    .replace(/ğ/g, 'g')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ı/g, 'i')
-    .replace(/ö/g, 'o')
-    .replace(/ç/g, 'c')
-    .replace(/ /g, '-');
-    roomName = roomName.toLowerCase();
-    roomName = `${roomName}$${id}`;
-    return roomName;
+    // used to achieve roomname from patient's firstname-lastname-id
   }
 
   retransform2(given) {
-    console.log('----->given', given);
-    let parameter = given.replace(/-/g, ' ');
-    parameter = parameter.toUpperCase();
-    parameter = parameter.split('$')[0];
-    return parameter;
+    // getting employee's or patient's id from username, roomname 
   }
-
+  
+  // message Bubble that appears when message received or send
   messageBubble(dir, text, username, time) {
     let leftSpacer = dir === 'left' ? null : <View style={{ width: wp('30%') }} />;
     let rightSpacer = dir === 'left' ? <View style={{ width: wp('30%') }} /> : null;
@@ -185,11 +165,12 @@ class ChatScene extends Component {
     await this.props.setMessagesNotReady();
     this.props.clearText();
     await this.props.setMessages(this.props.patient_id, this.props.roomName, this.state.chatroom_username);
-    await this.props.setPatientInfo(this.props.patient_id); //patientInfo //userActions
-    await this.props.getMessages2(this.state.id); //preparedMessages
+    await this.props.setPatientInfo(this.props.patient_id);
+    await this.props.getMessages2(this.state.id);
     this.setState({ allDone: true });
   }
-
+  
+  // used to render already defined messages by user
   renderDialogPreparedMessages() {
     return (
       <Dialog
@@ -239,196 +220,13 @@ class ChatScene extends Component {
     )
   }
 
-  render() { //this.props.messagesReady &&
-    if (!this.props.nrfMessageActions && !this.props.nrfUserActions && !this.props.nrfXmppActions && this.props.messagesReady) {
-      if (this.state.allowedWifi === false) {
-        return (
-          <Wallpaper img={bgSrc} type="hideNavBar">
-            <ScrollView style={styles.container}>
-              <Text style={styles.header}>
-                Aşağıdaki Ağlardan birine bağlanmanız gerekmektedir
-              </Text>
-              {this.props.modal}
-            </ScrollView>
-          </Wallpaper>
-        );
-      } else if (this.state.allowedWifi) {
-        return (
-          <Wallpaper img={bgSrc} type="hideNavBar">
-            <View style={styles.header}>
-              <View style={{ justifyContent: 'center', width: wp('20%'), alignItems: 'center' }}>
-                <Icon
-                  name='arrow-left'
-                  size={30}
-                  color='#fa9191'
-                  onPress={() => {
-                    this.props.notNotificatedAnymore(this.props.roomName, this.props.notificatedChannels2);
-                    Actions.main();
-                  }}
-                />
-              </View>
-              <View style={{ justifyContent: 'center', width: wp('60%'), alignItems: 'center' }}>
-                <Text style={styles.name}>Hasta Adı: {this.props.title}</Text>
-              </View>
-              <View style={{ justifyContent: 'center', width: wp('20%'), alignItems: 'center' }}>
-                <Icon
-                  name='arrow-right'
-                  size={30}
-                  color='#fa9191'
-                  onPress={() => Actions.patientProfile({
-                    title: this.props.title,
-                    patient_id: this.props.patient_id,
-                  })}
-                />
-              </View>
-            </View>
-
-            <View style={styles.outer}>
-
-                <ScrollView ref={(ref) => { this.scrollView = ref; }} style={styles.messages} onContentSizeChange={() => this.scrollView.scrollToEnd({ animated: true })}>
-                  {this.props.messages}
-                  {this.state.newComingMessages}
-                </ScrollView>
-
-                <View style={styles.inputBar}>
-                  <Icon
-                    name='comment-plus-outline'
-                    size={40}
-                    color={this.state.addButtonColor}
-                    onPress={() => {
-                      this.setState({ visiblePreparedMessages: true });
-                      this.setState({ addButtonColor: 'green' });
-                    }}
-                  />
-                  <AutogrowInput
-                   style={styles.textBox}
-                   ref={(ref) => { this.autogrowInput = ref; }}
-                   multiline
-                   defaultHeight={30}
-                   onChangeText={(value) => this.props.textChanged(value)} // (value) => this.setState({ text: value })
-                   value={this.props.text} // this.state.text
-                  />
-                  <Icon
-                   name='send-circle'
-                   size={40}
-                   color={this.props.text ? 'green' : 'gray'}
-                   onPress={() => {
-                     if (this.props.text !== '') {
-                       this.onSendPressed();
-                     }
-                   }}
-                  />
-                 </View>
-
-                 {this.renderDialogPreparedMessages()}
-
-             </View>
-          </Wallpaper>
-        );
-      }
-    }
-    if (this.props.nrfMessageActions || this.props.nrfUserActions || this.props.nrfXmppActions) {
-      return (
-        <View style={styles.container2}>
-          <Text style={styles.name}> Sunucuya Bağlanılamadı. </Text>
-          <Icon
-            name='refresh'
-            size={wp('7%')}
-            color='gray'
-            onPress={async () => {
-              await this.props.resetnrfMessageActions();
-              await this.props.resetnrfXmppActions();
-              await this.props.resetnrfUserActions();
-              this.start();
-            }}
-          />
-        </View>
-      );
-    } else if (!this.props.nrfMessageActions && !this.props.nrfUserActions && !this.props.nrfXmppActions) {
-      return (
-        <View style={styles.container2}>
-          <ActivityIndicator size="large" color="#ff0000" />
-        </View>
-      );
-    }
+  render() { 
+    // render contents
   }
-}
 
 
 const styles = StyleSheet.create({
-  container2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  outer: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  messages: {
-    flex: 1
-  },
-  inputBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 5,
-    paddingVertical: 3,
-  },
-  textBox: {
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: 'gray',
-    flex: 1,
-    fontSize: wp('5%'),
-    paddingHorizontal: 10
-  },
-  messageBubble: {
-    borderRadius: 5,
-    marginTop: 8,
-    marginRight: 10,
-    marginLeft: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    flexDirection: 'column',
-    flex: 1
-  },
-  messageBubbleLeft: {
-    backgroundColor: '#D7D7D7',
-  },
-  from: {
-    color: '#3399FF',
-    fontSize: wp('3%')
-  },
-  messageBubbleTextLeft: {
-    color: 'black',
-    fontSize: wp('5%')
-  },
-  messageBubbleRight: {
-    backgroundColor: '#CEF0D5'
-  },
-  messageBubbleTextRight: {
-    color: 'black',
-    fontSize: wp('5%')
-  },
-  container: {
-    flex: 1
-  },
-  header: {
-    backgroundColor: '#faf2f2',
-    height: hp('8%'),
-    borderColor: '#ffc7c7',
-    elevation: 3,
-    flexDirection: 'row',
-  },
-  name: {
-    fontSize: wp('6%'),
-    color: '#eb6383',
-    fontWeight: '600',
-  },
-  time: {
-    alignSelf: 'flex-end'
-  }
+  // styles
 });
 
 const mapStateToProps = ({ userResponse, messageResponse, xmppResponse, wifiResponse }) => {
