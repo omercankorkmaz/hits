@@ -37,4 +37,4 @@ seçilmiştir.
 
 # Notlar
 
-Paylaşılan kodlar React Native çatısıyla oluşturulan mobil uygulamadan bazılarıdır ve kısıtlı bir şekilde paylaşılmıştır. Uygulama 13 temel ekrandan oluşmakta ve 7 farklı Action ve Reducer'dan oluşmaktadır.
+Paylaşılan kodlar React Native çatısıyla oluşturulan mobil uygulamadan bazılarıdır ve kısıtlı bir şekilde paylaşılmıştır. Uygulama 13 temel ekrandan, 7 farklı Action ve Reducer'dan oluşmaktadır.
