@@ -32,7 +32,7 @@ class LoginForm extends Component {
     try {
       let id = await AsyncStorage.getItem('id');
       if (id !== null) {
-        Actions.passing();
+        Actions.passing(); // if user has already signed in, no need for authentication
       }
     } catch (error) {
         console.log(error);
@@ -71,16 +71,9 @@ class LoginForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  container2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  name: {
-    fontSize: wp('6%'),
-    color: '#696969',
-    fontWeight: '600',
-  }
+
+   // styles
+  
 });
 
 const mapStateToProps = ({ authResponse }) => {
