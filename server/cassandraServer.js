@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cassandra = require('cassandra-driver');
 const bcrypt = require('bcryptjs');
+const port = 3005;
 
 const program = async () => {
   const app = express();
@@ -9,12 +10,11 @@ const program = async () => {
   app.use(bodyParser.json()); // support json encoded bodies
   app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-
   const authProvider = new cassandra.auth.PlainTextAuthProvider('admin', 'adminpassword');
   const client = new cassandra.Client({
-    contactPoints: ['157.175.99.254:9042'],
+    contactPoints: ['ip-address-of-our-cassandra-server:9042'],
     localDataCenter: 'datacenter1',
-    keyspace: 'hits', //
+    keyspace: 'hihts', //
     authProvider
   });
 
@@ -23,40 +23,21 @@ const program = async () => {
   });
 
   app.post('/get-messages/', async (req, res) => {
-    console.log('Connected!');
-    //const roomName = req.params.roomName;
     const roomName = req.body.roomName;
-    const query = 'SELECT * FROM chat_messages WHERE to_group = ?';
-    const args = [roomName];
-    client.execute(query, args)
-      .then(result => {
-        console.log('result.rows', result.rows);
-        res.send(result.rows);
-      })
-      .catch(err => console.error(err));
+    // executing query for getting messages sent on the given roomname
   });
 
   app.post('/add-new-message', async (req, res) => {
-    console.log('Connected!');
     const args = {
       from_user: req.body.from_user,
       to_group: req.body.to_group,
       time: req.body.time,
       body: bcrypt.hashSync(req.body.body, 10),
-      from_user_dep: req.body.from_user_dep,
-      from_user_role: req.body.from_user_role
     };
-    console.log(args);
-    const query = 'INSERT INTO chat_messages (from_user, to_group, time, body, from_user_dep, from_user_role) VALUES (?,?,?,?,?,?)';
-    client.execute(query, args, { prepare: true })
-      .then(result => res.send(result))
-      .catch(err => console.error(err));
+    // executing query for setting new message 
   });
 
-  //myInstance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
-  //myInstance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
-
-  app.listen(3005, () => {
+  app.listen(port, () => {
    console.log('You can see the data.');
   });
 }
