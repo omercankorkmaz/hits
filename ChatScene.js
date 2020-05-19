@@ -48,15 +48,9 @@ class ChatScene extends Component {
   }
 
   async componentWillMount() {
-    await this.props.setChatroomName(this.props.title, this.props.patient_id);
-    const id = await AsyncStorage.getItem('id');
-    const chatroom_username = await AsyncStorage.getItem('chatroom_username');
-    this.setState({ id, chatroom_username });
-    await this.props.getEmployeePermissions(id);
-    if (!this.props.canWifiOutside) {
-      await this.props.resetState();
-      await this.props.getBSSID();
-    }
+    
+    // getting user's id, username for chatroom etc.
+    
     await this.start();
   }
 
@@ -94,8 +88,9 @@ class ChatScene extends Component {
   }
 
   async onSendPressed() {
-    await this.props.onSendMessage(this.props.text, this.props.roomName, this.state.chatroom_username);
-    await this.props.clearText();
+    
+    // uses MessageActions for sending message
+
   }
 
   setText(messageIndex) {
@@ -111,63 +106,24 @@ class ChatScene extends Component {
     // used to achieve roomname from patient's firstname-lastname-id
   }
 
-  retransform2(given) {
+  retransform(given) {
     // getting employee's or patient's id from username, roomname 
   }
   
-  // message Bubble that appears when message received or send
+  
   messageBubble(dir, text, username, time) {
-    let leftSpacer = dir === 'left' ? null : <View style={{ width: wp('30%') }} />;
-    let rightSpacer = dir === 'left' ? <View style={{ width: wp('30%') }} /> : null;
-    let bubbleStyles = dir === 'left' ? [styles.messageBubble, styles.messageBubbleLeft] : [styles.messageBubble, styles.messageBubbleRight];
-    let bubbleTextStyle = dir === 'left' ? styles.messageBubbleTextLeft : styles.messageBubbleTextRight;
-    time = time.split('-');
-    time = time[1];
-    time = time.slice(0, -3);
-    if (dir === 'left') {
-      const usernameTransformed = this.retransform2(username);
-      return (
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-          {leftSpacer}
-          <View style={bubbleStyles}>
-            <Text style={styles.from}>
-              {usernameTransformed}
-            </Text>
-            <Text style={bubbleTextStyle}>
-              {text}
-            </Text>
-            <Text style={styles.time}>
-              {time}
-            </Text>
-          </View>
-          {rightSpacer}
-        </View>
-      );
-    } else if (dir === 'right') {
-      return (
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-          {leftSpacer}
-          <View style={bubbleStyles}>
-            <Text style={bubbleTextStyle}>
-              {text}
-            </Text>
-            <Text style={styles.time}>
-              {time}
-            </Text>
-          </View>
-          {rightSpacer}
-        </View>
-      );
-    }
+    
+    // Message Bubble that appears on ChatScene when message received or send
+ 
   }
 
   async start() {
-    await this.props.setMessagesNotReady();
-    this.props.clearText();
-    await this.props.setMessages(this.props.patient_id, this.props.roomName, this.state.chatroom_username);
-    await this.props.setPatientInfo(this.props.patient_id);
-    await this.props.getMessages2(this.state.id);
-    this.setState({ allDone: true });
+    //
+    //
+    await this.props.setMessages(this.props.patient_id, this.props.roomName, this.state.chatroom_username); // get messages from cassandra
+    //
+    await this.props.getMessages2(this.state.id); // get prepared messages
+    //
   }
   
   // used to render already defined messages by user
