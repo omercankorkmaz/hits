@@ -33,8 +33,8 @@ seçilmiştir.
 
 - Verilerin saklanacağı ortamsa yine AWS tarafından sağlanan ve EC2 ile uyumlu Elastic Block Store olarak seçilmiştir.
 
-- Sistemde çalışanların sisteme kayıt edilmesi, sistemden silinmesi ve çalışanların şifre işlemleri gibi fonksiyonları için Admin Paneli oluşturulmuştur. Ek olarak, benzer bir panel kullanacak olan sekreter kullanıcı grubunun da benzer
-işlemleri Admin Paneli üzerinden kontrol edilecektir. Bu panel sayesinde üzerine konuşma kanalı açılması gereken hasta
-seçilip özel bir konuşma kanalı açılabilecek. Bu kanala eklenecek personeller yine bu panelde seçilebilecek.
-İşlemin kontrolü bu panelden yapılacağı için, personellerin de bir hasta adına kanal açılması gerektiğinde bu
-bilgiyi sekretere iletmesi gerekecektir. Bu panelleri barındıracak web uygulaması PHP ile geliştirilecektir.
+- Sistemde çalışanların sisteme kayıt edilmesi, sistemden silinmesi ve çalışanların şifre işlemleri gibi fonksiyonları için Admin Paneli oluşturulmuştur. Bu Web uygulaması PHP ile geliştirilmiştir.
+
+# Notlar
+
+Paylaşılan kodlar React Native çatısıyla oluşturulan mobil uygulamadan bazılarıdır ve kısıtlı bir şekilde paylaşılmıştır. Uygulama 13 temel ekrandan oluşmakta ve 7 farklı Action ve Reducer'dan oluşmaktadır.
