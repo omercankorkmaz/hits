@@ -8,51 +8,23 @@ const port1 = 3000; //used to get response from related query for MySql DB
 const port2 = 3001; //used to get notified for changes on MySql DB
 
 const program = async () => {
-  const dbConfig = {
-    host: 'ip-of-our-mysql-server',
-    port: '3306',
-    user: 'omercan',
-    password: '1234',
-    database: 'HIHTS'
-  };
-  
-  
   
   
   // configurations of express instances
 
+  // configurations of mysql server
+
   
-  
-  const myInstance = new MySQLEvents(connection, {
-    startAtEnd: true
-  });
-
-  await myInstance.start()
-    .then(() => console.log('I\'m running!'))
-    .catch(err => console.error('Something bad happened', err));
-
-  channel.on('connection', (socket) => {
-    console.log('connected for socketio');
-  });
-
   myInstance.addTrigger({
-    name: 'EMPLOYEE_PATIENT_TRIGGER',
-    expression: 'HIHTS.employee_patient',
-    statement: MySQLEvents.STATEMENTS.INSERT,
-    onEvent: (event) => {
-      let updatedData = [];
-      event.affectedRows.map((data) => {
-        updatedData = [...updatedData, { updatedEmployeeId: data.after.employee_id, updatedPatientId: data.after.patient_id, after: true }];
-      });
-      channel.emit('employee_patient_insert', { updatedData });
-    }
+    
+    // trigger options
+   
   });
   
   
   
   // other triggers on MySql
   
-
 
   myInstance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
   myInstance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
