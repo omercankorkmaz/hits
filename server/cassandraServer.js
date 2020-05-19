@@ -5,36 +5,25 @@ const bcrypt = require('bcryptjs');
 const port = 3005;
 
 const program = async () => {
-  const app = express();
+ 
+  // express configurations
 
-  app.use(bodyParser.json()); // support json encoded bodies
-  app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
-  const authProvider = new cassandra.auth.PlainTextAuthProvider('admin', 'adminpassword');
-  const client = new cassandra.Client({
-    contactPoints: ['ip-address-of-our-cassandra-server:9042'],
-    localDataCenter: 'datacenter1',
-    keyspace: 'hihts', //
-    authProvider
-  });
+  // cassandra server configurations
 
   app.get('/', (req, res) => {
     return res.send({ error: true, message: 'hello' });
   });
 
   app.post('/get-messages/', async (req, res) => {
-    const roomName = req.body.roomName;
+    
     // executing query for getting messages sent on the given roomname
+    
   });
 
   app.post('/add-new-message', async (req, res) => {
-    const args = {
-      from_user: req.body.from_user,
-      to_group: req.body.to_group,
-      time: req.body.time,
-      body: bcrypt.hashSync(req.body.body, 10),
-    };
+    
     // executing query for setting new message 
+    
   });
 
   app.listen(port, () => {
