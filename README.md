@@ -19,6 +19,8 @@ takibiyle çevresel kontrol sağlanabilecek ve sağlık sektöründe daha kalite
 yüküne sebep olacağından dolayı mobil uygulama geliştirme ortamı olarak hybrid bir geliştirme çatısı olan
 React-Native seçilmiştir.
 
+- Mobil Uygulama react-native-router-flux kütüphanesi ile birlikte Redux yapısı kullanılarak geliştirilmiştir. 
+
 - Veri yönetimi sistemleri konusunda, hasta ve çalışan bilgilerini sorgularla devamlı olarak arayüzlerde göstermek
 gerekeceğinden ilişkisel bir veritanabı yönetim sistemi olan MySQL seçilmiştir.
 
@@ -30,3 +32,9 @@ seçilmiştir.
 - Bütün belirlenen bu sistemlerin gerekli işlemleri yapılabilmesi bulut tabanlı sunucu olarak için Amazon Web Services tarafından sağlanan Elastic Compute Cloud (EC2) bulut sunucuları belirlenmiştir. Ve 3 farklı EC2 Instance oluşturulmuştur. (MySql, Cassandra, Prosody için)
 
 - Verilerin saklanacağı ortamsa yine AWS tarafından sağlanan ve EC2 ile uyumlu Elastic Block Store olarak seçilmiştir.
+
+- Sistemde çalışanların sisteme kayıt edilmesi, sistemden silinmesi ve çalışanların şifre işlemleri gibi fonksiyonları için Admin Paneli oluşturulmuştur. Ek olarak, benzer bir panel kullanacak olan sekreter kullanıcı grubunun da benzer
+işlemleri Admin Paneli üzerinden kontrol edilecektir. Bu panel sayesinde üzerine konuşma kanalı açılması gereken hasta
+seçilip özel bir konuşma kanalı açılabilecek. Bu kanala eklenecek personeller yine bu panelde seçilebilecek.
+İşlemin kontrolü bu panelden yapılacağı için, personellerin de bir hasta adına kanal açılması gerektiğinde bu
+bilgiyi sekretere iletmesi gerekecektir. Bu panelleri barındıracak web uygulaması PHP ile geliştirilecektir.
