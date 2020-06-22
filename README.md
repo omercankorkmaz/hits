@@ -29,7 +29,7 @@ gerekeceğinden ilişkisel bir veritanabı yönetim sistemi olan MySQL seçilmi�
 - Mesajlaşma protokolü (XMPP) kurmak adına ücretsiz kullanıma ve kolay bir kuruluma sahip olan Prosody sunucu
 seçilmiştir.
 
-- Donanım cihazlarından elde edilen verilerin işlenerek mobil uygulama üzerinde gösterilmesi için mqtt kütüphanesi ile publish-subscriber mimarisi aracılığıyla bütün receiver'lara abone olunmuştur.
+- Donanım cihazlarından elde edilen verilerin işlenerek mobil uygulama üzerinde gösterilmesi için mqtt.js kütüphanesi ile publish-subscriber mimarisi aracılığıyla bütün receiver'lara abone olunmuştur. Ve böylelikle herhangi bir receiver bir beacon tag'inden sinyal aldığında anlık olarak mobil uygulama üzerinde tag'in sahibi olan hastanın profilinde görüntülenebilmektedir.
 
 - Bütün belirlenen bu sistemlerin gerekli işlemleri yapılabilmesi bulut tabanlı sunucu olarak için Amazon Web Services tarafından sağlanan Elastic Compute Cloud (EC2) bulut sunucuları belirlenmiştir. Ve 3 farklı EC2 Instance oluşturulmuştur. (MySql, Cassandra, Prosody için)
 
