@@ -35,7 +35,7 @@ seçilmiştir.
 
 - Verilerin saklanacağı ortamsa yine AWS tarafından sağlanan ve EC2 ile uyumlu Elastic Block Store olarak seçilmiştir.
 
-- Veritabanı sunucularına bağlanma, websockets gibi server-side uygulamalar Node.js ortamında oluşturulmuştur.
+- Veritabanı sunucularına bağlanma, socketio ile kanal oluşturarak broadcasting yapmak gibi server-side uygulamalar Node.js ortamında oluşturulmuştur.
 
 - Sistemde çalışanların sisteme kayıt edilmesi, sistemden silinmesi ve çalışanların şifre işlemleri gibi fonksiyonları için Admin Paneli oluşturulmuştur. Bu Web uygulaması PHP ile geliştirilmiştir.
 
