@@ -3,7 +3,7 @@ Hastane İletişim Ve Hasta Takip Sistemi ( Hospital Communication and Patient L
 
 # ABSTRACT
 
-In this study, a mobile application that providing to be contacted through messages in line with the requirements of intra-hospital communication, obtaining necessary information from the hospital information system and monitoring the real-time position of the patient is proposed. Thanks to this mobile application, damages caused by communication delay or deficiency in hospitals can be prevented, environmental control can be provided by tracking the location of the patients and a higher quality service can be provided in the health sector.
+In this study, we propose a mobile application as a solution which includes messaging between healthcare workers and displaying real time location of inpatients. With this mobile application, the damage caused by the delay or lack of communication in hospitals can be prevented, environmental control can be provided by tracking the location of patients and a better quality service can be provided in the healthcare sector.
 
 # ÖZET
 
