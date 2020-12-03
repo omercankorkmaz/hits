@@ -71,11 +71,9 @@ class ChatScene extends Component {
       this.setState({ newComingMessages: temp });
     } else if (prevProps.isItAllowed !== this.props.isItAllowed) {
       if (this.props.isItAllowed) {
-        console.log('devamke');
         this.setState({ allowedWifi: true });
       }
     } else if (prevProps.modal !== this.props.modal) {
-      console.log('yoo');
       this.setState({ allowedWifi: false });
     } else if (prevProps.roomName !== this.props.roomName) {
       await this.props.notNotificatedAnymore(this.props.roomName, this.props.notificatedChannels2);
